@@ -10,4 +10,4 @@
  * Date      	By	Comments                                               *
  * ############################################################################### *
  */
-export * from './auth.controller'
+export * from './create.account.controller'
