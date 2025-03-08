@@ -14,3 +14,4 @@
 export { default as AppError } from './app.error'
 export * from './helper'
 export * from './app.response'
+export * from './logger'
