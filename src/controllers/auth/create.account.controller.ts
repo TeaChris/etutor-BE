@@ -11,11 +11,18 @@
  * ############################################################################### *
  */
 
-import AppError from '@/common/utils/app.error'
 import { catchAsync } from '../../middlewares'
 import { Request, Response } from 'express'
 import { UserModel } from '@/models'
-import { generateVerificationCode, hashPassword, Provider } from '@/common'
+import {
+  AppError,
+  AppResponse,
+  generateTokenAndSetCookie,
+  generateVerificationCode,
+  hashPassword,
+  Provider,
+  toJSON,
+} from '@/common'
 
 export const createAccount = catchAsync(async (req: Request, res: Response) => {
   const {
@@ -67,4 +74,7 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
   await user.save()
 
   generateTokenAndSetCookie(res, user._id)
+
+  toJSON(user, ['password'])
+  AppResponse(res, 201, toJSON(user), 'Account created successfully')
 })
