@@ -10,7 +10,14 @@
   "author": "Boluwatife Olasunkanmi",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mailtrap": "^4.0.0",
+    "mongoose": "^8.12.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
