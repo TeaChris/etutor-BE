@@ -36,6 +36,13 @@ const userSchema = new mongoose.Schema<IUser, unknown, UserMethods>(
       required: [true, 'First name is required '],
     },
 
+    username: {
+      type: String,
+      min: [3, 'Username must be at least 3 characters long'],
+      max: [50, 'Username must not be more than 15 characters long'],
+      required: [true, 'Username is required'],
+    },
+
     email: {
       type: String,
       required: [true, 'Email field is required'],
@@ -126,7 +133,7 @@ const userSchema = new mongoose.Schema<IUser, unknown, UserMethods>(
       enum: Object.values(Gender),
     },
 
-    isIdVerified: {
+    isVerified: {
       type: Boolean,
       default: false,
     },
@@ -159,6 +166,11 @@ const userSchema = new mongoose.Schema<IUser, unknown, UserMethods>(
 
     verificationToken: {
       type: String,
+      select: false,
+    },
+
+    verificationTokenExpiresAt: {
+      type: Date,
       select: false,
     },
 
@@ -209,7 +221,7 @@ userSchema.pre('save', async function (next) {
       this.phoneNumber,
       this.photo,
       this.gender,
-      this.isIdVerified,
+      this.isVerified,
       this.isMobileVerified,
       this.isEmailVerified,
     ]
