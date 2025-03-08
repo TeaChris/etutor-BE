@@ -13,6 +13,7 @@
 
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { IUser } from '../interface'
 
 const hashPassword = async (password: string) => {
   return await bcrypt.hash(password, 12)
@@ -52,7 +53,49 @@ const generateTokenAndSetCookie = (res, userId) => {
 
   res.cookie('token', token, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   })
+
+  return token
 }
 
-export { hashPassword, generateVerificationCode, setCache }
+const toJSON = (obj: IUser, fields?: string[]): Partial<IUser> => {
+  const user = JSON.parse(JSON.stringify(obj))
+
+  if (fields && fields.length === 0) {
+    return user
+  }
+
+  const results = { ...user }
+
+  if (fields && fields.length > 0) {
+    for (const field of fields) {
+      if (field in results) {
+        delete results[field as keyof IUser]
+      }
+    }
+    return results
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {
+    refreshToken,
+    loginRetries,
+    lastLogin,
+    password,
+    updatedAt,
+    ...rest
+  } = user
+
+  return rest
+}
+
+export {
+  toJSON,
+  hashPassword,
+  generateVerificationCode,
+  setCache,
+  generateTokenAndSetCookie,
+}
