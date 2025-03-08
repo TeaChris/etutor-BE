@@ -20,6 +20,7 @@ import { ITwoFactor } from './2fa'
 export interface IUser {
   firstName: string
   lastName: string
+  username: string
   email: string
   password: string
   refreshToken: string
@@ -30,6 +31,7 @@ export interface IUser {
   provider: Provider
   phoneNumber: string
   verificationToken: string
+  verificationTokenExpiresAt: Date
   passwordResetToken: string
   passwordResetExpires: Date
   passwordResetRetries: number
@@ -38,7 +40,7 @@ export interface IUser {
   loginRetries: number
   address: string[]
   gender: Gender
-  isIdVerified: boolean
+  isVerified: boolean
   isSuspended: boolean
   isMobileVerified: boolean
   isEmailVerified: boolean
