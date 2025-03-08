@@ -11,7 +11,7 @@
  * ############################################################################### *
  */
 
-import { twoFactorTypeEnum } from '@/common/constants'
+import { twoFactorTypeEnum } from '../constants'
 
 export interface ITwoFactor {
   type?: twoFactorTypeEnum
