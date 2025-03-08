@@ -22,7 +22,7 @@ import {
   hashPassword,
   Provider,
   toJSON,
-} from '@/common'
+} from '../../common'
 
 export const createAccount = catchAsync(async (req: Request, res: Response) => {
   const {
