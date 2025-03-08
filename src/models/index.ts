@@ -10,3 +10,5 @@
  * Date      	By	Comments                                               *
  * ############################################################################### *
  */
+export * from './user.model'
+export * from './2.fa.model'
