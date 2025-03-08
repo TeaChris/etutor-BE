@@ -11,3 +11,5 @@
  * ############################################################################### *
  */
 export * from './catchAsyncErrors'
+export * from './validateDataWithZod'
+export * from './error.handler'
