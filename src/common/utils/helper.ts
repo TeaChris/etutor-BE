@@ -23,6 +23,16 @@ const generateVerificationCode = () => {
   return Math.floor(100000 + Math.random() * 90000).toString()
 }
 
+const dateFromString = async (value: string) => {
+  const date = new Date(value)
+
+  if (isNaN(date?.getTime())) {
+    return false
+  }
+
+  return date
+}
+
 const setCache = async (
   key: string,
   value: string | number | object | Buffer,
@@ -94,6 +104,7 @@ const toJSON = (obj: IUser, fields?: string[]): Partial<IUser> => {
 
 export {
   toJSON,
+  dateFromString,
   hashPassword,
   generateVerificationCode,
   setCache,
