@@ -22,6 +22,8 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT || 5000
 
+app.use(express.json()) // allows us to parse incoming requests::req.body
+
 app.get('/alive', (req: Request, res: Response) => {
   res.status(200).json({ message: 'Server is alive and listening to requests' })
 })
