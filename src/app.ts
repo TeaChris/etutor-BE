@@ -14,19 +14,21 @@ import { Response, Request } from 'express'
 import * as dotenv from 'dotenv'
 import { db } from './db/db'
 
+import { authRouter } from './routes'
+
 const express = require('express')
 
 dotenv.config()
-
 const app = express()
+const port = process.env.PORT || 5000
 
-app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({ message: 'Hello World' })
+app.get('/alive', (req: Request, res: Response) => {
+  res.status(200).json({ message: 'Server is alive and listening to requests' })
 })
 
-const port = process.env.PORT || 5000
+app.use('/api/v1/auth', authRouter)
 
 app.listen(port, () => {
   db()
-  console.log('App is running on port 3000')
+  console.log(`App is running on port ${port}`)
 })
