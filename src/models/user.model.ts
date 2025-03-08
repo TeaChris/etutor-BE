@@ -11,7 +11,7 @@
  * ############################################################################### *
  */
 
-import { Gender, Provider, Role } from '@/common/constants'
+import { Gender, Provider, Role } from '../common/constants'
 import { IUser, UserMethods } from '@/common/interface/user'
 import { TwoFAModel } from './2.fa.model'
 
