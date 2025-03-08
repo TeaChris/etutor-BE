@@ -11,7 +11,7 @@
  * ############################################################################### *
  */
 
-import { twoFactorTypeEnum } from '@/common/constants'
+import { twoFactorTypeEnum } from '../common/constants'
 import mongoose from 'mongoose'
 
 export const TwoFAModel = new mongoose.Schema(
