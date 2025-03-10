@@ -34,15 +34,6 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
     username,
   } = req.body
 
-  console.log('Received data:', {
-    email,
-    firstName,
-    lastName,
-    password,
-    username,
-    isTermAndConditionAccepted,
-  })
-
   if (!email || !firstName || !lastName || !password || !username) {
     throw new AppError('Incomplete create account data', 400)
   }
