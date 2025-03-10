@@ -46,6 +46,13 @@ export const mainSchema = z.object({
           'Last name must be in sentence case, can include hyphen, and apostrophes (e.g., "Ali", "Ade-Bright" or "Smith\'s").',
       }
     ),
+  username: z
+    .string()
+    .min(3, 'Username must be at least 3 characters long')
+    .max(30, 'Username must not be more than 30 characters long')
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: 'Username can only contain letters, numbers, and underscores.',
+    }),
   email: z.string().email('Please enter a valid email address!'),
   password: z
     .string()
