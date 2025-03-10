@@ -18,14 +18,29 @@ import { authRouter } from './routes'
 import { validateDataWithZod, errorHandler } from './middlewares'
 import { logger } from './common'
 
+import cors from 'cors'
+
 const express = require('express')
 
 dotenv.config()
 const app = express()
 const port = process.env.PORT || 5000
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+/**
+ * Express configuration
+ */
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']) // Enable trust proxy
+// app.use(cookieParser())
+app.use(express.json({ limit: '10kb' }))
+app.use(express.urlencoded({ limit: '50mb', extended: true }))
+
+//Middleware to allow CORS from frontend
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    credentials: true,
+  })
+)
 
 app.use(validateDataWithZod)
 app.use('/api/v1/alive', (req, res) =>
