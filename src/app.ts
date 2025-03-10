@@ -3,7 +3,7 @@
  * Created Date: Fr Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Sat Mar 08 2025                                              *
+ * Last Modified: Mon Mar 10 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -24,7 +24,8 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT || 5000
 
-app.use(express.json()) // allows us to parse incoming requests::req.body
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(validateDataWithZod)
 app.use('/api/v1/alive', (req, res) =>
