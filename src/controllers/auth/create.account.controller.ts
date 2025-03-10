@@ -38,16 +38,21 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
     throw new AppError('Incomplete create account data', 400)
   }
 
-  const existingUser = await UserModel.findOne({ email })
+  const existingUser = await UserModel.findOne({
+    $or: [{ email }, { username }],
+  })
 
   if (existingUser) {
-    throw new AppError('User with this email already exists', 409)
-  }
+    let errorMessage = 'User already exists'
 
-  const existingUsername = await UserModel.findOne({ username })
-
-  if (existingUsername) {
-    throw new AppError('User with this username already exists', 409)
+    if (existingUser.email === email && existingUser.username === username) {
+      errorMessage = 'User with this email and username already exists'
+    } else if (existingUser.email === email) {
+      errorMessage = 'User with this email already exists'
+    } else if (existingUser.username === username) {
+      errorMessage = 'User with this username already exists'
+    }
+    throw new AppError(errorMessage, 409)
   }
 
   const hashedPassword = await hashPassword(password)
