@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Sat Mar 08 2025                                              *
+ * Last Modified: Mon Mar 10 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -57,8 +57,12 @@ const setCache = async (
 }
 
 const generateTokenAndSetCookie = (res, userId) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: '1d',
+  const secret = process.env.JWT_SECRET
+  if (!secret) {
+    throw new Error('JWT_SECRET is not defined in the environment variables')
+  }
+  const token = jwt.sign({ userId }, secret, {
+    expiresIn: process.env.JWT_EXPIRES_IN || '1d',
   })
 
   res.cookie('token', token, {
