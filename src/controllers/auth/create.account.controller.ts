@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Sat Mar 08 2025                                              *
+ * Last Modified: Mon Mar 10 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -34,21 +34,23 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
     username,
   } = req.body
 
+  console.log('Received data:', {
+    email,
+    firstName,
+    lastName,
+    password,
+    username,
+    isTermAndConditionAccepted,
+  })
+
   if (!email || !firstName || !lastName || !password || !username) {
     throw new AppError('Incomplete create account data', 400)
   }
 
-  if (!isTermAndConditionAccepted) {
-    throw new AppError(
-      'Kindly accept term and condition to create account',
-      400
-    )
-  }
-
-  const existingUser = await UserModel.find({ email })
+  const existingUser = await UserModel.findOne({ email })
 
   if (existingUser) {
-    throw new AppError('User with this email already exist', 409)
+    throw new AppError('User with this email already exists', 409)
   }
 
   const existingUsername = await UserModel.findOne({ username })
@@ -64,12 +66,17 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
     email,
     firstName,
     lastName,
+    username,
     password: hashedPassword,
     provider: Provider.Local,
     isTermAndConditionAccepted,
     verificationToken,
     verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
   })
+
+  if (Object.keys(req.body).length === 0) {
+    throw new AppError('Request body is empty', 400)
+  }
 
   await user.save()
 
