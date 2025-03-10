@@ -15,13 +15,13 @@ import { catchAsync } from '../../middlewares'
 import { Request, Response } from 'express'
 import { UserModel } from '../../models'
 import {
+  toJSON,
+  Provider,
   AppError,
   AppResponse,
+  hashPassword,
   generateTokenAndSetCookie,
   generateVerificationCode,
-  hashPassword,
-  Provider,
-  toJSON,
 } from '../../common'
 
 export const createAccount = catchAsync(async (req: Request, res: Response) => {
