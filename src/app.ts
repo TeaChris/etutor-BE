@@ -43,7 +43,7 @@ app.use(
 )
 
 app.use(validateDataWithZod)
-app.use('/api/v1/alive', (req, res) =>
+app.use('/api/v1/alive', (req:Request, res:Response) =>
   res
     .status(200)
     .json({ status: 'success', message: 'Server is up and running' })
@@ -51,7 +51,7 @@ app.use('/api/v1/alive', (req, res) =>
 
 app.use('/api/v1/auth', authRouter)
 
-app.all('/*', async (req, res) => {
+app.all('/*', async (req:Request, res:Response) => {
   logger.error(
     'route not found ' + new Date(Date.now()) + ' ' + req.originalUrl
   )
