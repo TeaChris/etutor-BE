@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Sat Mar 08 2025                                              *
+ * Last Modified: Tue Mar 11 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -12,3 +12,4 @@
  */
 export * from './2fa'
 export * from './user'
+export * from './request'
