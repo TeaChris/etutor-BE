@@ -21,7 +21,7 @@ export const session = catchAsync(async (req: Request, res: Response) => {
     throw new AppError('Unauthenticated', 401)
   }
 
-  const initialData = await currentUser._id
+  const initialData =currentUser._id
   return AppResponse(
     res,
     200,
