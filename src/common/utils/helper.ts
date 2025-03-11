@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Mon Mar 10 2025                                              *
+ * Last Modified: Tue Mar 11 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -12,8 +12,12 @@
  */
 
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import { IUser } from '../interface'
+import jwt, { SignOptions } from 'jsonwebtoken'
+import { IHashData, IUser } from '../interface'
+
+import { promisify } from 'util'
+import type { CookieOptions, Response } from 'express'
+import { ENVIRONMENT } from '../config'
 
 const hashPassword = async (password: string) => {
   return await bcrypt.hash(password, 12)
@@ -31,6 +35,63 @@ const dateFromString = async (value: string) => {
   }
 
   return date
+}
+
+const decodeData = async (token: string, secret?: string) => {
+  const verifyAsync: (arg1: string, arg2: string) => jwt.JwtPayload = promisify(
+    jwt.verify
+  )
+  console.log(secret)
+
+  const verify = await verifyAsync(
+    token,
+    secret ? secret : ENVIRONMENT.JWT.ACCESS_KEY!
+  )
+  return verify
+}
+
+const hashData = (data: IHashData, options?: SignOptions, secret?: string) => {
+  return jwt.sign(
+    { ...data },
+    secret ? secret : ENVIRONMENT.JWT.ACCESS_KEY,
+    ...[options?.expiresIn ? { expiresIn: options?.expiresIn } : {}]
+  )
+}
+
+const setCookie = (
+  res: Response,
+  name: string,
+  value: string,
+  options: CookieOptions = {}
+) => {
+  res.cookie(name, value, {
+    httpOnly: true,
+    secure: ENVIRONMENT.APP.ENV === 'production',
+    path: '/',
+    sameSite: ENVIRONMENT.APP.ENV === 'production' ? 'none' : 'lax',
+    partitioned: ENVIRONMENT.APP.ENV === 'production',
+    ...options,
+  })
+}
+
+const getFromCache = async <T = string>(key: string) => {
+  if (!key) {
+    throw new Error('Invalid key provided')
+  }
+
+  const data = await redis.get(key)
+  if (!data) {
+    return null
+  }
+
+  let parseData
+  try {
+    parseData = JSON.parse(data)
+  } catch (error) {
+    parseData = data
+  }
+
+  return parseData as T
 }
 
 const setCache = async (
@@ -107,10 +168,14 @@ const toJSON = (obj: IUser, fields?: string[]): Partial<IUser> => {
 }
 
 export {
+  getFromCache,
+  hashData,
   toJSON,
-  dateFromString,
-  hashPassword,
-  generateVerificationCode,
   setCache,
+  setCookie,
+  decodeData,
+  hashPassword,
+  dateFromString,
+  generateVerificationCode,
   generateTokenAndSetCookie,
 }
