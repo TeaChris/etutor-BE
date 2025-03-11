@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Mon Mar 10 2025                                              *
+ * Last Modified: Tue Mar 11 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -17,6 +17,8 @@ import { Router } from 'express'
 const router = Router()
 
 router.post('/create-account', createAccount)
-router.post('/session', session)
+
+import { protect } from '@/middlewares'
+router.get('/session', session)
 
 export { router as authRouter }
