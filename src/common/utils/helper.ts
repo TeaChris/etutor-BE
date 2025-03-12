@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Tue Mar 11 2025                                              *
+ * Last Modified: Wed Mar 12 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -11,13 +11,13 @@
  * ############################################################################### *
  */
 
-import bcrypt from 'bcryptjs'
-import jwt, { SignOptions } from 'jsonwebtoken'
+import { promisify } from 'util'
+import { ENVIRONMENT } from '../config'
 import { IHashData, IUser } from '../interface'
 
-import { promisify } from 'util'
+import bcrypt from 'bcryptjs'
 import type { CookieOptions, Response } from 'express'
-import { ENVIRONMENT } from '../config'
+import jwt, { SignOptions } from 'jsonwebtoken'
 
 const hashPassword = async (password: string) => {
   return await bcrypt.hash(password, 12)
@@ -128,7 +128,7 @@ const generateTokenAndSetCookie = (res, userId) => {
 
   res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: ENVIRONMENT.APP.ENV === 'production',
     sameSite: 'strict',
     maxAge: 7 * 24 * 60 * 60 * 1000,
   })
