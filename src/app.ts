@@ -3,7 +3,7 @@
  * Created Date: Fr Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Mon Mar 10 2025                                              *
+ * Last Modified: Wed Mar 12 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -16,7 +16,7 @@ import { db } from './db/db'
 
 import { authRouter } from './routes'
 import { validateDataWithZod, errorHandler } from './middlewares'
-import { logger } from './common'
+import { ENVIRONMENT, logger } from './common'
 
 import cors from 'cors'
 
@@ -24,7 +24,7 @@ const express = require('express')
 
 dotenv.config()
 const app = express()
-const port = process.env.PORT || 5000
+const port = ENVIRONMENT.APP.PORT || 5000
 
 /**
  * Express configuration
@@ -43,7 +43,7 @@ app.use(
 )
 
 app.use(validateDataWithZod)
-app.use('/api/v1/alive', (req:Request, res:Response) =>
+app.use('/api/v1/alive', (req: Request, res: Response) =>
   res
     .status(200)
     .json({ status: 'success', message: 'Server is up and running' })
@@ -51,7 +51,7 @@ app.use('/api/v1/alive', (req:Request, res:Response) =>
 
 app.use('/api/v1/auth', authRouter)
 
-app.all('/*', async (req:Request, res:Response) => {
+app.all('/*', async (req: Request, res: Response) => {
   logger.error(
     'route not found ' + new Date(Date.now()) + ' ' + req.originalUrl
   )
