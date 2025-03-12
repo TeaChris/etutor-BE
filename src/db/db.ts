@@ -3,7 +3,7 @@
  * Created Date: Fr Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Sat Mar 08 2025                                              *
+ * Last Modified: Wed Mar 12 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -11,11 +11,13 @@
  * ############################################################################### *
  */
 
+import { ENVIRONMENT } from '../common'
+
 const mongoose = require('mongoose')
 
 export const db = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI as string)
+    await mongoose.connect(ENVIRONMENT.DB)
     console.log('Database connected')
   } catch (error) {
     console.log(error)
