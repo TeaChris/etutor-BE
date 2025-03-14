@@ -10,6 +10,8 @@
  * Date      	By	Comments                                               *
  * ############################################################################### *
  */
+
 export * from './catchAsyncErrors'
 export * from './validateDataWithZod'
 export * from './error.handler'
+export * from './protect'
