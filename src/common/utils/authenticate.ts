@@ -26,13 +26,13 @@ type AuthenticateResult = {
 }
 
 export const authenticate = async ({
-  abegAccessToken,
-  abegRefreshToken,
+  etutorAccessToken,
+                                     etutorRefreshToken,
 }: {
-  abegAccessToken?: string
-  abegRefreshToken?: string
+  etutorAccessToken?: string
+  etutorRefreshToken?: string
 }): Promise<AuthenticateResult> => {
-  if (!abegRefreshToken) {
+  if (!etutorRefreshToken) {
     throw new AppError('Unauthorized', 401)
   }
 
@@ -55,7 +55,7 @@ export const authenticate = async ({
     // in case the user has logged out and the token is still valid
     // or the user has re authenticated and the token is still valid etc
 
-    if (user.refreshToken !== abegRefreshToken) {
+    if (user.refreshToken !== etutorRefreshToken) {
       throw new AppError('Invalid token. Please log in again!', 401)
     }
 
@@ -92,7 +92,7 @@ export const authenticate = async ({
   const handleTokenRefresh = async () => {
     try {
       const decodeRefreshToken = await decodeData(
-        abegRefreshToken,
+        etutorRefreshToken,
         ENVIRONMENT.JWT.REFRESH_KEY!
       )
 
@@ -115,12 +115,12 @@ export const authenticate = async ({
   }
 
   try {
-    if (!abegAccessToken) {
+    if (!etutorAccessToken) {
       // if access token is not present, verify the refresh token and generate a new access token
       return await handleTokenRefresh()
     } else {
       const decodeAccessToken = await decodeData(
-        abegAccessToken,
+        etutorAccessToken,
         ENVIRONMENT.JWT.ACCESS_KEY!
       )
       const currentUser = await handleUserVerification(decodeAccessToken)
@@ -132,7 +132,7 @@ export const authenticate = async ({
     if (
       (error instanceof jwt.JsonWebTokenError ||
         error instanceof jwt.TokenExpiredError) &&
-      abegRefreshToken
+      etutorRefreshToken
     ) {
       // verify the refresh token and generate a new access token
       return await handleTokenRefresh()
