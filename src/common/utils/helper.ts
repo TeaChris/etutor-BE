@@ -15,9 +15,18 @@ import { promisify } from 'util'
 import { ENVIRONMENT } from '../config'
 import { IHashData, IUser } from '../interface'
 
+import Redis from 'ioredis'
 import bcrypt from 'bcryptjs'
 import jwt, { SignOptions } from 'jsonwebtoken'
 import type { CookieOptions, Response } from 'express'
+
+if(!ENVIRONMENT.CACHE_REDIS.URL){
+  throw new Error('Cache redis url not found')
+}
+
+const redis = new Redis(ENVIRONMENT.CACHE_REDIS.URL!)
+
+
 
 const hashPassword = async (password: string) => {
   return await bcrypt.hash(password, 12)
@@ -117,7 +126,7 @@ const setCache = async (
   return await redis.set(key, value)
 }
 
-const generateTokenAndSetCookie = (res, userId) => {
+const generateTokenAndSetCookie = (res: Response, userId:string) => {
   const secret = process.env.JWT_SECRET
   if (!secret) {
     throw new Error('JWT_SECRET is not defined in the environment variables')
