@@ -11,14 +11,16 @@
  * ############################################################################### *
  */
 
+import { protect } from '../middlewares'
 import { createAccount, session } from '../controllers'
+
 import { Router } from 'express'
 
 const router = Router()
 
 router.post('/create-account', createAccount)
 
-import { protect } from '@/middlewares'
+router.use(protect) // protected endpoints
 router.get('/session', session)
 
 export { router as authRouter }
