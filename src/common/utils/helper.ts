@@ -16,8 +16,8 @@ import { ENVIRONMENT } from '../config'
 import { IHashData, IUser } from '../interface'
 
 import bcrypt from 'bcryptjs'
-import type { CookieOptions, Response } from 'express'
 import jwt, { SignOptions } from 'jsonwebtoken'
+import type { CookieOptions, Response } from 'express'
 
 const hashPassword = async (password: string) => {
   return await bcrypt.hash(password, 12)
@@ -110,11 +110,11 @@ const setCache = async (
     value = JSON.stringify(value)
   }
 
-  // if (expiry) {
-  //   return await redis.set(key, value, 'EX', expiry)
-  // }
+  if (expiry) {
+    return await redis.set(key, value, 'EX', expiry)
+  }
 
-  // return await redis.set(key, value)
+  return await redis.set(key, value)
 }
 
 const generateTokenAndSetCookie = (res, userId) => {
