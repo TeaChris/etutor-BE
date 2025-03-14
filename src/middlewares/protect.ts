@@ -18,11 +18,11 @@ import type { NextFunction, Request, Response } from 'express'
 export const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // get the cookies from the request headers
-    const { abegAccessToken, abegRefreshToken } = req.cookies
+    const { etutorAccessToken, etutorRefreshToken } = req.cookies
 
     const { currentUser, accessToken } = await authenticate({
-      abegAccessToken,
-      abegRefreshToken,
+      etutorRefreshToken,
+      etutorAccessToken,
     })
 
     if (accessToken) {
