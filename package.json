@@ -17,6 +17,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "google-libphonenumber": "^3.2.40",
+    "ioredis": "^5.6.0",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.5.0",
     "mailtrap": "^4.0.0",
