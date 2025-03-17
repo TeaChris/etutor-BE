@@ -11,8 +11,9 @@
  * ############################################################################### *
  */
 
-import { catchAsync } from '../../middlewares'
 import { Request, Response } from 'express'
+
+import { catchAsync } from '../../middlewares'
 import { UserModel } from '../../models'
 import {
   toJSON,
@@ -22,6 +23,7 @@ import {
   hashPassword,
   generateTokenAndSetCookie,
   generateVerificationCode,
+  setCache,
 } from '../../common'
 
 export const createAccount = catchAsync(async (req: Request, res: Response) => {
@@ -88,6 +90,6 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
 
   // generateTokenAndSetCookie(res, user._id)
 
-  toJSON(user, ['password'])
+  await setCache(user._id.toString(), toJSON(user, ['password']))
   AppResponse(res, 201, toJSON(user), 'Account created successfully')
 })
