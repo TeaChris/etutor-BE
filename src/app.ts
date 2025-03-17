@@ -3,28 +3,40 @@
  * Created Date: Fr Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Wed Mar 12 2025                                              *
+ * Last Modified: Mon Mar 17 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
  * Date      	By	Comments                                               *
  * ############################################################################### *
  */
-import { Response, Request } from 'express'
-import * as dotenv from 'dotenv'
-import { db } from './db/db'
 
+import * as dotenv from 'dotenv'
+dotenv.config()
+// if (process.env.NODE_ENV === 'production') {
+//   require('module-alias/register')
+// }
+
+import { Response, Request } from 'express'
+
+import { db } from './db/db'
 import { authRouter } from './routes'
 import { validateDataWithZod, errorHandler } from './middlewares'
 import { ENVIRONMENT, logger } from './common'
 
 import cors from 'cors'
+import * as process from "node:process";
 
 const express = require('express')
 
 dotenv.config()
+
+/**
+ * Default app configuration
+ */
 const app = express()
-const port = ENVIRONMENT.APP.PORT || 5000
+const port = ENVIRONMENT.APP.PORT!
+const appName = ENVIRONMENT.APP.NAME!
 
 /**
  * Express configuration
@@ -51,7 +63,7 @@ app.use('/api/v1/alive', (req: Request, res: Response) =>
 
 app.use('/api/v1/auth', authRouter)
 
-app.all('/*', async (req: Request, res: Response) => {
+app.all('/*', async (req: Request, res: Response): Promise<void> => {
   logger.error(
     'route not found ' + new Date(Date.now()) + ' ' + req.originalUrl
   )
@@ -65,7 +77,8 @@ app.all('/*', async (req: Request, res: Response) => {
 
 app.use(errorHandler)
 
-app.listen(port, () => {
+app.listen(port, (): void => {
   db()
-  console.log(`App is running on port ${port}`)
+  console.log(`=> ${ENVIRONMENT.APP.NAME} servers is running on port ${port}`)
+  console.log(`DB URL ${ENVIRONMENT.DB.URL}`)
 })
