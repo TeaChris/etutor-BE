@@ -17,7 +17,7 @@ const mongoose = require('mongoose')
 
 export const db = async () => {
   try {
-    await mongoose.connect(ENVIRONMENT.DB)
+    await mongoose.connect(ENVIRONMENT.DB.URL!)
     console.log('Database connected')
   } catch (error) {
     console.log(error)
