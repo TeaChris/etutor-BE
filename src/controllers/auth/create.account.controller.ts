@@ -76,7 +76,7 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
 
   await user.save()
 
-  generateTokenAndSetCookie(res, user._id)
+  // generateTokenAndSetCookie(res, user._id)
 
   toJSON(user, ['password'])
   AppResponse(res, 201, toJSON(user), 'Account created successfully')
