@@ -11,6 +11,7 @@
  * ############################################################################### *
  */
 
+
 import type { IEnvironment } from '../interface'
 
 export const ENVIRONMENT: IEnvironment = {
