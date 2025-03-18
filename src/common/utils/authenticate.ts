@@ -3,7 +3,7 @@
  * Created Date: Tu Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Tue Mar 11 2025                                              *
+ * Last Modified: Tue Mar 18 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -20,6 +20,10 @@ import { Require_id } from 'mongoose'
 
 import { decodeData, getFromCache, hashData, setCache } from './helper'
 
+if (!ENVIRONMENT.JWT.ACCESS_KEY) {
+  throw new Error('JWT Access Key not found')
+}
+
 type AuthenticateResult = {
   currentUser: Require_id<IUser>
   accessToken?: string
@@ -27,7 +31,7 @@ type AuthenticateResult = {
 
 export const authenticate = async ({
   etutorAccessToken,
-                                     etutorRefreshToken,
+  etutorRefreshToken,
 }: {
   etutorAccessToken?: string
   etutorRefreshToken?: string
