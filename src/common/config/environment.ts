@@ -3,7 +3,7 @@
  * Created Date: Tu Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Tue Mar 11 2025                                              *
+ * Last Modified: Tue Mar 18 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -11,6 +11,9 @@
  * ############################################################################### *
  */
 
+import * as dotenv from 'dotenv'
+
+dotenv.config({ path: '.env' })
 
 import type { IEnvironment } from '../interface'
 
