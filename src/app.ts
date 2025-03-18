@@ -3,7 +3,7 @@
  * Created Date: Fr Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Mon Mar 17 2025                                              *
+ * Last Modified: Tue Mar 18 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -12,31 +12,32 @@
  */
 
 import * as dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({ path: '.env' })
 // if (process.env.NODE_ENV === 'production') {
 //   require('module-alias/register')
 // }
+
+import { ENVIRONMENT, logger } from './common'
 
 import { Response, Request } from 'express'
 
 import { db } from './db/db'
 import { authRouter } from './routes'
 import { validateDataWithZod, errorHandler } from './middlewares'
-import { ENVIRONMENT, logger } from './common'
+// import { ENVIRONMENT, logger } from './common'
 
 import cors from 'cors'
-import * as process from "node:process";
+import * as process from 'node:process'
 
 const express = require('express')
 
-dotenv.config()
+// dotenv.config()
 
 /**
  * Default app configuration
  */
 const app = express()
 const port = ENVIRONMENT.APP.PORT!
-const appName = ENVIRONMENT.APP.NAME!
 
 /**
  * Express configuration
