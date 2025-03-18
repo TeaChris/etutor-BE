@@ -68,7 +68,7 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
   // }
 
   const hashedPassword = await hashPassword(password)
-  const verificationToken = generateVerificationCode()
+  // const verificationToken = generateVerificationCode()
 
   const user = await UserModel.create({
     email,
@@ -78,15 +78,15 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
     password: hashedPassword,
     provider: Provider.Local,
     isTermAndConditionAccepted,
-    verificationToken,
-    verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
+    // verificationToken,
+    // verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
   })
 
   if (Object.keys(req.body).length === 0) {
     throw new AppError('Request body is empty', 400)
   }
 
-  await user.save()
+  // await user.save()
 
   // generateTokenAndSetCookie(res, user._id)
 
