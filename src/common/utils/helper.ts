@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Fri Mar 14 2025                                              *
+ * Last Modified: Tue Mar 18 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -14,9 +14,12 @@
 import { promisify } from 'util'
 import { ENVIRONMENT } from '../config'
 import { IHashData, IUser } from '../interface'
+import { addEmailToQueue } from '../../queues'
 
 import Redis from 'ioredis'
 import bcrypt from 'bcryptjs'
+import { Request } from 'express'
+import { Require_id } from 'mongoose'
 import jwt, { SignOptions } from 'jsonwebtoken'
 import type { CookieOptions, Response } from 'express'
 
@@ -174,6 +177,37 @@ const toJSON = (obj: IUser, fields?: string[]): Partial<IUser> => {
   return rest
 }
 
+const sendVerificationEmail = async (user: Require_id<IUser>, req: Request) => {
+  // add welcome email to queue for user to verify account
+  const emailVerificationToken = hashData({ id: user._id.toString() })
+
+  await addEmailToQueue({
+    type: 'welcomeEmail',
+    data: {
+      to: user.email,
+      name: user.firstName,
+      email: user.email,
+      verificationLink: `${getDomainReferer(
+        req
+      )}/verify-email?token=${emailVerificationToken}`,
+    },
+  })
+}
+
+const getDomainReferer = (req: Request) => {
+  try {
+    const referer = req.get('x-referer')
+
+    if (!referer) {
+      return `${ENVIRONMENT.FRONTEND_URL}`
+    }
+
+    return referer
+  } catch (error) {
+    return null
+  }
+}
+
 export {
   toJSON,
   hashData,
@@ -183,6 +217,8 @@ export {
   getFromCache,
   hashPassword,
   dateFromString,
+  getDomainReferer,
+  sendVerificationEmail,
   generateVerificationCode,
   generateTokenAndSetCookie,
 }
