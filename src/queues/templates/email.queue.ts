@@ -16,9 +16,9 @@ import { Queue } from 'bullmq'
 import { EmailJobData, ENVIRONMENT, logger } from '../../common'
 
 const connection = new IORedis({
-  port: ENVIRONMENT.REDIS.PORT,
-  host: ENVIRONMENT.REDIS.URL,
-  password: ENVIRONMENT.REDIS.PASSWORD,
+  port: parseInt(process.env.QUEUE_REDIS_PORT!),
+  host: 'able-rooster-29368.upstash.io',
+  password: process.env.QUEUE_REDIS_PASSWORD!,
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
   offlineQueue: false,
@@ -26,7 +26,7 @@ const connection = new IORedis({
 
 if (connection) {
   console.log('Connected to queue redis cluster')
-  logger.info('Connected to queue redis cluster')
+  // logger.info('Connected to queue redis cluster')
 }
 
 const emailQueue = new Queue<EmailJobData>('emailQueue', {
