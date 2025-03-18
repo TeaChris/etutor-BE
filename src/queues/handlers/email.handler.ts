@@ -16,13 +16,13 @@ import { ENVIRONMENT, logger } from '../../common'
 import type { EmailJobData } from '../../common/interface'
 import { welcomeEmail } from '../templates'
 
-const resend = new Resend(ENVIRONMENT.EMAIL.API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY!)
 
 const TEMPLATES = {
   welcomeEmail: {
     subject: 'Welcome to ETutor',
     template: welcomeEmail,
-    from: 'ETutor <donotreply@etutor.com>',
+    from: 'ETutor <onboarding@resend.dev>',
   },
 }
 
