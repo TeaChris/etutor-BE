@@ -31,7 +31,7 @@ import * as process from 'node:process'
 
 const express = require('express')
 
-// dotenv.config()
+dotenv.config()
 
 /**
  * Default app configuration
@@ -81,5 +81,4 @@ app.use(errorHandler)
 app.listen(port, (): void => {
   db()
   console.log(`=> ${ENVIRONMENT.APP.NAME} servers is running on port ${port}`)
-  console.log(`DB URL ${ENVIRONMENT.DB.URL}`)
 })
