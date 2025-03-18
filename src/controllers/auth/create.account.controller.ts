@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Mon Mar 17 2025                                              *
+ * Last Modified: Tue Mar 18 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -24,6 +24,7 @@ import {
   generateTokenAndSetCookie,
   generateVerificationCode,
   setCache,
+  sendVerificationEmail,
 } from '../../common'
 
 export const createAccount = catchAsync(async (req: Request, res: Response) => {
@@ -85,6 +86,8 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
   if (Object.keys(req.body).length === 0) {
     throw new AppError('Request body is empty', 400)
   }
+
+  await sendVerificationEmail(user, req)
 
   // await user.save()
 
