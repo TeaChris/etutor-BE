@@ -222,7 +222,7 @@ const getDomainReferer = (req: Request) => {
   }
 }
 
-const extractUAData=(req:Request) =>({
+const extractUAData = (req: Request) => ({
   country: req.headers['cf-ipcountry']?.toString() || '',
   city: req.headers['cf-ipcity']?.toString() || '',
   postalCode: req.headers['cf-postal-code']?.toString() || '',
