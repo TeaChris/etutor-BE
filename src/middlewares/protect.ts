@@ -3,7 +3,7 @@
  * Created Date: Tu Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Mon Mar 17 2025                                              *
+ * Last Modified: Wed Mar 19 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -13,6 +13,7 @@
 
 import { AppError, authenticate, setCookie } from '../common'
 import { catchAsync } from '../middlewares'
+
 import type { NextFunction, Request, Response } from 'express'
 
 export const protect = catchAsync(
