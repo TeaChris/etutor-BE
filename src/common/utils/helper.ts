@@ -104,6 +104,20 @@ const getFromCache = async <T = string>(key: string) => {
   return parseData as T
 }
 
+const removeFromCache = async <T = string>(key: string) => {
+  if (!key) {
+    throw new Error('Invalid key provided')
+  }
+
+  const data = await redis.get(key)
+
+  if (!data) {
+    return null
+  }
+
+  return data
+}
+
 const setCache = async (
   key: string,
   value: string | number | object | Buffer,
@@ -215,6 +229,7 @@ export {
   setCookie,
   decodeData,
   getFromCache,
+    removeFromCache,
   hashPassword,
   dateFromString,
   getDomainReferer,
