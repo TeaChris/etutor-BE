@@ -3,7 +3,7 @@
  * Created Date: Fr Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Tue Mar 18 2025                                              *
+ * Last Modified: Wed Mar 19 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -20,6 +20,7 @@ dotenv.config({ path: '.env' })
 import { ENVIRONMENT, logger } from './common'
 
 import { Response, Request } from 'express'
+import http from 'http'
 
 import { db } from './db/db'
 import { authRouter } from './routes'
@@ -28,6 +29,7 @@ import { validateDataWithZod, errorHandler } from './middlewares'
 
 import cors from 'cors'
 import * as process from 'node:process'
+import { startAllQueuesAndWorkers } from './queues'
 
 const express = require('express')
 
@@ -38,6 +40,7 @@ dotenv.config()
  */
 const app = express()
 const port = ENVIRONMENT.APP.PORT!
+const appName = ENVIRONMENT.APP.NAME!
 
 /**
  * Express configuration
@@ -78,7 +81,25 @@ app.all('/*', async (req: Request, res: Response): Promise<void> => {
 
 app.use(errorHandler)
 
-app.listen(port, (): void => {
-  db()
-  console.log(`=> ${ENVIRONMENT.APP.NAME} servers is running on port ${port}`)
+const server = http.createServer(app)
+
+// app.listen(port, (): void => {
+//   db()
+//   console.log(`=> ${ENVIRONMENT.APP.NAME} servers is running on port ${port}`)
+//   ;(async () => {
+//     await startAllQueuesAndWorkers()
+//   })()
+// })
+
+const appServer = server.listen(port, async () => {
+  await db()
+  console.log(`=> ${appName} app listening on port ${port}!`)
+
+  try {
+    await startAllQueuesAndWorkers()
+    console.log('All queues started successfully')
+  } catch (error) {
+    console.error('Failed to start queues:', error)
+    process.exit(1)
+  }
 })
