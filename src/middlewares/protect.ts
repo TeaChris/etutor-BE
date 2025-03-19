@@ -27,7 +27,7 @@ export const protect = catchAsync(
     })
 
     if (accessToken) {
-      setCookie(res, 'abegAccessToken', accessToken, {
+      setCookie(res, 'etutorAccessToken', accessToken, {
         maxAge: 15 * 60 * 1000, // 15 minutes
       })
     }
