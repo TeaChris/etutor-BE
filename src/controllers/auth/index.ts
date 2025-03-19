@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Mon Mar 10 2025                                              *
+ * Last Modified: Wed Mar 19 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -13,3 +13,4 @@
 export * from './create.account.controller'
 export * from './session.controller'
 export * from './verify-email'
+export * from './sign.in'
