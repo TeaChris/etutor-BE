@@ -25,6 +25,7 @@ import http from 'http'
 import { db } from './db/db'
 import { authRouter } from './routes'
 import { validateDataWithZod, errorHandler } from './middlewares'
+import cookieParser from 'cookie-parser';
 // import { ENVIRONMENT, logger } from './common'
 
 import cors from 'cors'
@@ -46,7 +47,7 @@ const appName = ENVIRONMENT.APP.NAME!
  * Express configuration
  */
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']) // Enable trust proxy
-// app.use(cookieParser())
+app.use(cookieParser())
 app.use(express.json({ limit: '10kb' }))
 app.use(express.urlencoded({ limit: '50mb', extended: true }))
 
