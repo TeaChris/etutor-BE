@@ -12,12 +12,13 @@
  */
 
 import { protect } from '../middlewares'
-import { createAccount, session } from '../controllers'
+import {createAccount, session, verifyEmail} from '../controllers'
 
 import { Router } from 'express'
 
 const router = Router()
 
+router.post('/verify-email', verifyEmail)
 router.post('/create-account', createAccount)
 
 router.use(protect) // protected endpoints
