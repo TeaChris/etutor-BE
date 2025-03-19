@@ -12,3 +12,4 @@
  */
 export * from './create.account.controller'
 export * from './session.controller'
+export * from './verify-email'
