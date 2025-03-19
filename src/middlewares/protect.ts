@@ -17,9 +17,13 @@ import { catchAsync } from '../middlewares'
 import type { NextFunction, Request, Response } from 'express'
 
 export const protect = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    // get the cookies from the request headers
-    const { etutorAccessToken, etutorRefreshToken } = req.cookies
+    async (req: Request, res: Response, next: NextFunction) => {
+        // Safely destructure cookies with fallback
+        const { etutorAccessToken, etutorRefreshToken } = req.cookies || {};
+
+        if (!etutorAccessToken && !etutorRefreshToken) {
+            throw new AppError('Not authenticated', 401);
+        }
 
     const { currentUser, accessToken } = await authenticate({
       etutorRefreshToken,
