@@ -12,3 +12,4 @@
  */
 export * from './user.model'
 export * from './2.fa.model'
+export * from './location.model'
