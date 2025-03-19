@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Tue Mar 11 2025                                              *
+ * Last Modified: Wed Mar 19 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -12,12 +12,13 @@
  */
 
 import { protect } from '../middlewares'
-import {createAccount, session, verifyEmail} from '../controllers'
+import { createAccount, session, signIn, verifyEmail } from '../controllers'
 
 import { Router } from 'express'
 
 const router = Router()
 
+router.post('/sign-in', signIn)
 router.post('/verify-email', verifyEmail)
 router.post('/create-account', createAccount)
 
