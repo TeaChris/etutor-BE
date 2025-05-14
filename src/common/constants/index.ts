@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Tue Mar 18 2025                                              *
+ * Last Modified: Wed May 14 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -14,9 +14,9 @@
 // import { ENVIRONMENT } from '@/common/config'
 
 export enum Role {
-  Admin = 'superuser',
   User = 'user',
-  Instructor = 'guest',
+  Admin = 'superuser',
+  Instructor = 'instructor',
 }
 
 export enum Provider {
@@ -27,8 +27,6 @@ export enum Provider {
 export enum Gender {
   Male = 'male',
   Female = 'female',
-  Other = 'other',
-  None = 'none',
 }
 
 export enum JWTExpiresIn {
@@ -50,49 +48,50 @@ export enum VerifyTimeBased2faTypeEnum {
 }
 
 export enum twoFactorTypeEnum {
-  EMAIL = 'EMAIL',
   APP = 'APP',
+  EMAIL = 'EMAIL',
 }
 
 export enum Country {
-  NIGERIA = 'NIGERIA',
-  GHANA = 'GHANA',
   MALI = 'MALI',
-  LIBERIA = 'LIBERIA',
+  BENIN = 'BENIN',
+  GHANA = 'GHANA',
   GAMBIA = 'GAMBIA',
+  LIBERIA = 'LIBERIA',
+  NIGERIA = 'NIGERIA',
   CAMEROON = 'CAMEROON',
 }
 
 export enum Category {
-  Health_and_Wellness = 'Health and Wellness',
-  Business = 'Business',
-  Family = 'Family',
-  Emergency = 'Emergency',
-  Religion = 'Religion',
-  Medical = 'Medical',
-  Volunteer = 'Volunteer',
-  Education = 'Education',
-  Event = 'Event',
-  Wedding = 'Wedding',
-  Others = 'Others',
+  Marketing_and_Sales = 'Marketing and Sales',
+  Personal_Development = 'Personal Development',
+  Technology_and_coding = 'Technology and Coding',
+  Education_and_Teaching = 'Education and Teaching',
+  Finance_and_Accounting = 'Finance and Accounting',
+  Creative_arts_and_design = 'Creative Arts and Design',
+  Data_Science_and_Analytics = 'Data_Science_and_Analytics',
+  Business_and_Entrepreneurship = 'Business and Entrepreneurship',
+  Soft_Skills_and_Personal_Development = 'Soft Skills and Personal Development',
 }
 
+export enum SubCategories {}
+
 export enum StatusEnum {
-  IN_REVIEW = 'In Review',
+  DRAFT = 'Draft',
   APPROVED = 'Approved',
   REJECTED = 'Rejected',
-  DRAFT = 'Draft',
+  IN_REVIEW = 'In Review',
 }
 
 export enum FlaggedReasonTypeEnum {
-  INAPPROPRIATE_CONTENT = 'In-appropriate Content',
-  MISMATCH = 'Mismatch',
   EXISTS = 'Exists',
+  MISMATCH = 'Mismatch',
+  INAPPROPRIATE_CONTENT = 'In-appropriate Content',
 }
 
 export enum PaymentStatusEnum {
-  UNPAID = 'Unpaid',
   PAID = 'Paid',
+  UNPAID = 'Unpaid',
   FAILED = 'Failed',
   REFUNDED = 'Refunded',
   REFUND_FAILED = 'Refund failed',
