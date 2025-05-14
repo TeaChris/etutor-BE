@@ -3,7 +3,7 @@
  * Created Date: Sa Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Wed Mar 19 2025                                              *
+ * Last Modified: Wed May 14 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -19,20 +19,20 @@ import {
   toJSON,
   Provider,
   AppError,
+  setCache,
   AppResponse,
   hashPassword,
-  setCache,
   sendVerificationEmail,
 } from '../../common'
 
 export const createAccount = catchAsync(async (req: Request, res: Response) => {
   const {
     email,
-    firstName,
     lastName,
     password,
-    isTermAndConditionAccepted,
     username,
+    firstName,
+    isTermAndConditionAccepted,
   } = req.body
 
   if (!email || !firstName || !lastName || !password || !username) {
@@ -53,11 +53,11 @@ export const createAccount = catchAsync(async (req: Request, res: Response) => {
 
   const user = await UserModel.create({
     email,
-    firstName,
     lastName,
     username,
-    password: hashedPassword,
+    firstName,
     provider: Provider.Local,
+    password: hashedPassword,
     isTermAndConditionAccepted,
   })
 
