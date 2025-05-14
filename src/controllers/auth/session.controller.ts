@@ -3,7 +3,7 @@
  * Created Date: Mo Mar 2025                                                   *
  * Author: Boluwatife Olasunkanmi O.                                           *
  * -----                                                                       *
- * Last Modified: Thu Mar 20 2025                                              *
+ * Last Modified: Wed May 14 2025                                              *
  * Modified By: Boluwatife Olasunkanmi O.                                      *
  * -----                                                                       *
  * HISTORY:                                                                    *
@@ -11,9 +11,9 @@
  * ############################################################################### *
  */
 
-import { AppError, AppResponse, toJSON } from '../../common'
-import { catchAsync } from '../../middlewares'
 import { Request, Response } from 'express'
+import { catchAsync } from '../../middlewares'
+import { AppError, AppResponse, toJSON } from '../../common'
 
 export const session = catchAsync(async (req: Request, res: Response) => {
   const currentUser = req.user
