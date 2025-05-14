@@ -1,25 +1,25 @@
-import type { Request, Response } from 'express'
 import { DateTime } from 'luxon'
+import type { Request, Response } from 'express'
 
 import {
-  ENVIRONMENT,
-  Provider,
-  ILocation,
   IUser,
-  AppResponse,
-  AppError,
-  extractUAData,
-  sendVerificationEmail,
-  setCookie,
-  setCache,
+  logger,
   toJSON,
   hashData,
-  logger,
+  Provider,
+  AppError,
+  setCache,
+  ILocation,
+  setCookie,
+  ENVIRONMENT,
+  AppResponse,
+  extractUAData,
+  sendVerificationEmail,
 } from '../../common'
 
 import { catchAsync } from '../../middlewares'
-import { UserModel, locationModel } from '../../models'
 import { addEmailToQueue } from '../../queues'
+import { UserModel, locationModel } from '../../models'
 
 export const signIn = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body
